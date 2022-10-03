@@ -1,12 +1,30 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+import Principal from './screens/Principal';
+import Qr from './screens/Qr';
+import VideoFavorito from './screens/VideoFavorito';
+import NumeroEmergencia from './screens/NumeroEmergencia';
+import Clima from './screens/Clima';
+import Contactos from './screens/Contactos';
+
+const Stack = createNativeStackNavigator();
+
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Principal" component={Principal} />
+        <Stack.Screen name="Qr" component={Qr} />
+        <Stack.Screen name="VideoFavorito" component={VideoFavorito} />
+        <Stack.Screen name="NumeroEmergencia" component={NumeroEmergencia} />
+        <Stack.Screen name="Clima" component={Clima} />
+        <Stack.Screen name="Contactos" component={Contactos} />
+      </Stack.Navigator>
+    </NavigationContainer>
+
   );
 }
 
