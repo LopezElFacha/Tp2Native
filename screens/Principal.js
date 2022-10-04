@@ -9,7 +9,7 @@ export default function Principal({navigation, route}) {
       <Button title='Video Favorito' onPress={()=>navigation.navigate("VideoFavorito")} />
       <Button title='Numero Emergencia' onPress={()=>navigation.navigate("NumeroEmergencia")} />
       <Button title='Clima' onPress={()=>navigation.navigate("Clima")} />
-      <Button title='Contacto' onPress={()=>navigation.navigate("Contacto")} />
+      <Button title='Contactos' onPress={()=>navigation.navigate("Contactos")} />
     </View>
   )
 }
