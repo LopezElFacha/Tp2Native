@@ -4,19 +4,21 @@ import { Provider ,Appbar,Card,IconButton,Avatar} from 'react-native-paper';
 import * as Contacts from 'expo-contacts';
 import Icon from 'react-native-vector-icons/Entypo';
 
-const Item =({phoneNumbers,name,id}) =>(
+const Item =({phoneNumbers,name,id,numEmergencia}) =>(
   <Card key={id} style={styles.cardbox}  onPress={() => handleClick(phoneNumbers ? phoneNumbers[0].number : '')}  >
   <Card.Title
       title= {name}
       left={(props) =>    <Icon name="user"  style={styles.iconBox} size={27} color="#900" />}
       subtitle={phoneNumbers ? phoneNumbers[0].number : ''}
   />
+  <Text>{phoneNumbers ? (phoneNumbers[0].number == numEmergencia ? "CONTACTO DE EMERGENCIA" : ""): ''}</Text>
   </Card>
 );
 
-const Contactos = () => {
+const Contactos = ({route,navigation}) => {
+  const{numEmergencia} = route.params;
     const renderItem = ({item}) =>(
-        <Item phoneNumbers={item.phoneNumbers} name={item.name} id={item.id}/>
+        <Item phoneNumbers={item.phoneNumbers} name={item.name} id={item.id} numEmergencia={numEmergencia}/>
     );
 
     const [data, setData] = React.useState([]);
