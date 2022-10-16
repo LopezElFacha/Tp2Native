@@ -2,7 +2,9 @@ import { View, Text, Button } from "react-native";
 import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import MensajeUsuario from "../helpers/MensajeUsuario";
+import { Accelerometer } from "expo-sensors";
 import Bg from "../helpers/Bg";
+import * as SMS from 'expo-sms';
 
 export default function Principal({ navigation, route }) {
   const [numEmergencia, setNumEmergencia] = useState(null);
@@ -17,9 +19,42 @@ export default function Principal({ navigation, route }) {
       MensajeUsuario(e);
     }
   };
+  const [subscription, setSubscription] = useState(null);
+  const _subscribe = () => {
+    setSubscription(
+      Accelerometer.addListener(async (accelerometerData) => {
+        try {
+          const aceleracion = Math.sqrt(
+            accelerometerData.x * accelerometerData.x +
+              accelerometerData.y * accelerometerData.y +
+              accelerometerData.z * accelerometerData.z
+          );
+          const sensibilidad = 1.8;
+          if (aceleracion >= sensibilidad) {
+            const isAvailable = await SMS.isAvailableAsync();
+            if (isAvailable) {
+              await SMS.sendSMSAsync(await AsyncStorage.getItem("numEmergencia"), "Me agitaron xd");
+            } else {
+              MensajeUsuario("No te funkan los SMS");
+            }
+          }
+        } catch (error) {
+          console.log.log(error)
+        }
+      })
+    );
+  };
+  const _unsubscribe = () => {
+    subscription && subscription.remove();
+    setSubscription(null);
+  };
 
   useEffect(() => {
+    _subscribe();
+    Accelerometer.setUpdateInterval(1000);
     getData();
+    
+    return () => _unsubscribe();
   }, []);
 
   return (
