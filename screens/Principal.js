@@ -19,6 +19,8 @@ export default function Principal({ navigation, route }) {
       MensajeUsuario(e);
     }
   };
+
+
   const [subscription, setSubscription] = useState(null);
   const _subscribe = () => {
     setSubscription(
