@@ -5,6 +5,7 @@ import * as ImagePicker from "expo-image-picker";
 import * as MediaLibrary from "expo-media-library";
 import { Camera } from "expo-camera";
 import { Context } from "../App";
+import Bg from "../helpers/Bg";
 
 export default function Camaras() {
   const [image, setimage] = useContext(Context);
